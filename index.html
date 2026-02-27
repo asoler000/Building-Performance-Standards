@@ -1126,139 +1126,163 @@
 
     <script src="./index_files/bootstrap.bundle.min.js.download"></script>
     <script>
-        // Penalty Calculator Logic
-        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const jurisdiction = document.getElementById('jurisdiction').value;
-            const sqft = parseInt(document.getElementById('sqft').value);
-            const penaltyRate = document.getElementById('penaltyRate').value;
-            
-            const resultDiv = document.getElementById('calculatorResult');
-            const contentDiv = document.getElementById('resultContent');
-            
-            let resultHTML = '';
-            
-            if (jurisdiction === 'nyc') {
-                resultHTML = `
-                    <div class="alert alert-info">
-                        <h5><strong>NYC Local Law 97 Estimation</strong></h5>
-                        <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
-                        <p>NYC LL97 penalties are calculated at <strong>$268 per ton of CO₂ equivalent</strong> over your building's emissions cap. To provide an accurate estimate, we need:</p>
-                        <ul>
-                            <li>Your building's specific emissions cap (based on occupancy type and year)</li>
-                            <li>Actual or projected emissions (from benchmarking data)</li>
-                            <li>Tons of CO₂e overage</li>
-                        </ul>
-                        <p class="mb-0"><strong>Sample Illustrative Range:</strong> For a building of this size, annual penalties could range from <strong>$50,000 to $500,000+</strong> depending on overage magnitude. Buildings with efficient systems may face zero penalties; buildings with legacy HVAC and high energy use may face exposure at the higher end or beyond.</p>
-                    </div>
-                `;
-                
-                if (penaltyRate) {
-                    const customPenalty = parseFloat(penaltyRate);
-                    const fiveYearImpact = customPenalty * 5;
-                    const valuationImpact = (customPenalty / 0.06).toFixed(0);
-                    
-                    resultHTML += `
-                        <div class="alert alert-warning mt-3">
-                            <h5><strong>Your Estimated Exposure</strong></h5>
-                            <p><strong>Annual Penalty (your estimate):</strong> $${customPenalty.toLocaleString()}</p>
-                            <p><strong>5-Year Cumulative Exposure (2024–2028):</strong> $${fiveYearImpact.toLocaleString()}</p>
-                            <p><strong>Implied Valuation Impact (6% cap rate):</strong> ~$${parseInt(valuationImpact).toLocaleString()}</p>
-                            <p class="disclaimer mb-0">Illustrative only. Assumes recurring penalty with no mitigation. Does not account for 2030 cap tightening or potential escalation.</p>
-                        </div>
-                    `;
-                }
-            } else if (jurisdiction === 'other') {
-                resultHTML = `
-                    <div class="alert alert-secondary">
-                        <h5><strong>Jurisdiction Not Specified</strong></h5>
-                        <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
-                        <p>Building performance standards vary significantly by jurisdiction. To provide an accurate penalty estimate, we need to identify which program applies to your asset and review your benchmarking data.</p>
-                        <p class="mb-0">Save Energy Systems maintains regulatory intelligence across all active U.S. programs and can model your exposure once jurisdiction is confirmed.</p>
-                    </div>
-                `;
-            } else {
-                const jurisdictionNames = {
-                    'boston': 'Boston BERDO',
-                    'dc': 'Washington DC BEPS',
-                    'seattle': 'Seattle Building Emissions Performance Standard',
-                    'denver': 'Denver Energize Denver',
-                    'chicago': 'Chicago Building Performance Standard',
-                    'la': 'Los Angeles EBEWE Ordinance'
-                };
-                
-                resultHTML = `
-                    <div class="alert alert-info">
-                        <h5><strong>${jurisdictionNames[jurisdiction]} Estimation</strong></h5>
-                        <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
-                        <p>Penalty structures and compliance pathways vary by jurisdiction. ${jurisdictionNames[jurisdiction]} has specific requirements based on building type, size, and use.</p>
-                        <p><strong>Typical Exposure Range (directional):</strong> Buildings of this size in covered jurisdictions may face annual penalties ranging from <strong>$25,000 to $300,000+</strong> depending on emissions gap, compliance pathway options, and jurisdiction-specific multipliers.</p>
-                        <p class="mb-0">For a verified assessment, Save Energy Systems models your specific building against jurisdiction rules using benchmarking and utility data.</p>
-                    </div>
-                `;
-                
-                if (penaltyRate) {
-                    const customPenalty = parseFloat(penaltyRate);
-                    const fiveYearImpact = customPenalty * 5;
-                    const valuationImpact = (customPenalty / 0.06).toFixed(0);
-                    
-                    resultHTML += `
-                        <div class="alert alert-warning mt-3">
-                            <h5><strong>Your Estimated Exposure</strong></h5>
-                            <p><strong>Annual Penalty (your estimate):</strong> $${customPenalty.toLocaleString()}</p>
-                            <p><strong>5-Year Cumulative Exposure:</strong> $${fiveYearImpact.toLocaleString()}</p>
-                            <p><strong>Implied Valuation Impact (6% cap rate):</strong> ~$${parseInt(valuationImpact).toLocaleString()}</p>
-                            <p class="disclaimer mb-0">Illustrative only. Assumes recurring penalty with no mitigation. Jurisdiction rules and timelines vary.</p>
-                        </div>
-                    `;
-                }
-            }
-            
-            contentDiv.innerHTML = resultHTML;
-            resultDiv.classList.add('show');
-            
-            // Smooth scroll to result
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        });
+  // Penalty Calculator Logic (Directional, sqft-driven)
+  document.getElementById('calculatorForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const navHeight = 120; // Account for fixed navs
-                    const targetPosition = target.offsetTop - navHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+    const jurisdiction = document.getElementById('jurisdiction').value;
+    const sqft = parseInt(document.getElementById('sqft').value, 10);
+    const penaltyRateRaw = document.getElementById('penaltyRate').value;
 
-        // Highlight active section in sticky nav
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.sticky-nav .nav-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 200;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
+    const resultDiv = document.getElementById('calculatorResult');
+    const contentDiv = document.getElementById('resultContent');
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    // Basic validation
+    if (!jurisdiction || !sqft || sqft <= 0) return;
+
+    // --- Helper: format currency ---
+    const fmt = (n) => `$${Math.round(n).toLocaleString()}`;
+
+    // --- Sqft band multipliers (middle-ground, conservative) ---
+    // These multipliers scale the "directional range" so results change with sqft.
+    function sqftBandMultiplier(sqft) {
+      if (sqft < 25000) return 0.6;         // below typical thresholds, still possible program exposure
+      if (sqft < 50000) return 0.9;
+      if (sqft < 200000) return 1.2;        // "middle"
+      if (sqft < 500000) return 1.6;
+      return 2.2;                           // very large assets / campuses
+    }
+
+    const mult = sqftBandMultiplier(sqft);
+
+    // --- Base ranges by jurisdiction group (directional only) ---
+    // We intentionally keep these broad and conservative.
+    const baseRanges = {
+      nyc:   { low: 50000,  high: 500000 }, // LL97 sample band (still requires tons-over-cap for precision)
+      other: { low: 25000,  high: 300000 }  // generic BPS band
+    };
+
+    // Slightly adjust non-NYC ranges by market (optional, conservative)
+    const marketAdjust = {
+      boston: 1.0,
+      dc: 1.05,
+      seattle: 1.0,
+      denver: 0.9,
+      chicago: 1.0,
+      la: 1.0,
+      other: 1.0
+    };
+
+    const names = {
+      nyc: "NYC Local Law 97",
+      boston: "Boston BERDO",
+      dc: "Washington DC BEPS",
+      seattle: "Seattle Building Emissions Performance Standard",
+      denver: "Denver Energize Denver",
+      chicago: "Chicago Building Performance Standard",
+      la: "Los Angeles EBEWE Ordinance",
+      other: "Other / Not Sure"
+    };
+
+    let resultHTML = "";
+
+    // Compute a sqft-driven directional range
+    function directionalRange(jKey) {
+      const base = (jKey === 'nyc') ? baseRanges.nyc : baseRanges.other;
+      const adj = marketAdjust[jKey] ?? 1.0;
+
+      const low = base.low * mult * adj;
+      const high = base.high * mult * adj;
+
+      // Ensure low < high and keep round numbers
+      return { low: Math.max(5000, low), high: Math.max(low * 1.5, high) };
+    }
+
+    const range = directionalRange(jurisdiction === 'nyc' ? 'nyc' : jurisdiction);
+
+    // --- Build outputs ---
+    if (jurisdiction === 'nyc') {
+      resultHTML = `
+        <div class="alert alert-info">
+          <h5><strong>${names.nyc} (Directional Estimate)</strong></h5>
+          <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
+          <p>
+            LL97 penalties are calculated at <strong>$268 per ton of CO₂e</strong> over your building’s emissions cap.
+            For a verified estimate, we must confirm:
+          </p>
+          <ul>
+            <li>Your occupancy-based emissions cap (by compliance period)</li>
+            <li>Actual emissions from benchmarking and utility data</li>
+            <li>Resulting tons of CO₂e over the cap</li>
+          </ul>
+          <p class="mb-0">
+            <strong>Illustrative range (scaled by size):</strong> ${fmt(range.low)} to ${fmt(range.high)} annually, depending on overage.
+            Efficient buildings may be at or near $0; higher-overage buildings can exceed the upper bound.
+          </p>
+        </div>
+      `;
+    } else if (jurisdiction === 'other') {
+      resultHTML = `
+        <div class="alert alert-secondary">
+          <h5><strong>Jurisdiction Not Specified (Directional Estimate)</strong></h5>
+          <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
+          <p>
+            Program rules and penalty formulas vary by city and state. To provide a verified estimate, we confirm jurisdiction,
+            covered building type, and your benchmarking baseline.
+          </p>
+          <p class="mb-0">
+            <strong>Illustrative range (scaled by size):</strong> ${fmt(range.low)} to ${fmt(range.high)} annually.
+          </p>
+        </div>
+      `;
+    } else {
+      resultHTML = `
+        <div class="alert alert-info">
+          <h5><strong>${names[jurisdiction]} (Directional Estimate)</strong></h5>
+          <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
+          <p>
+            Compliance pathways and penalties vary based on building type and baseline performance.
+            SES verifies exposure by modeling your benchmarking and utility data against current jurisdiction rules.
+          </p>
+          <p class="mb-0">
+            <strong>Illustrative range (scaled by size):</strong> ${fmt(range.low)} to ${fmt(range.high)} annually.
+          </p>
+        </div>
+      `;
+    }
+
+    // Optional: if they entered an annual penalty estimate, do real math on that number
+    if (penaltyRateRaw && !isNaN(parseFloat(penaltyRateRaw))) {
+      const annual = Math.max(0, parseFloat(penaltyRateRaw));
+      const fiveYear = annual * 5;
+      const capRate = 0.06; // assumption disclosed below
+      const valuation = annual / capRate;
+
+      resultHTML += `
+        <div class="alert alert-warning mt-3">
+          <h5><strong>Your Modeled Scenario (Based on Your Input)</strong></h5>
+          <p><strong>Annual Penalty (your estimate):</strong> ${fmt(annual)}</p>
+          <p><strong>5-Year Cumulative Exposure:</strong> ${fmt(fiveYear)}</p>
+          <p><strong>Implied Valuation Drag (6% cap rate):</strong> ~${fmt(valuation)}</p>
+          <p class="disclaimer mb-0">
+            Illustrative only. Assumes the penalty is recurring and unchanged. Cap rates vary by asset class and market.
+          </p>
+        </div>
+      `;
+    } else {
+      // Nudge them to request a verified assessment if they want precision
+      resultHTML += `
+        <div class="alert alert-light mt-3">
+          <strong>Want precision?</strong> Use “Request a Verified Assessment” and we’ll model exposure using your actual benchmarking + utility data.
+        </div>
+      `;
+    }
+
+    contentDiv.innerHTML = resultHTML;
+    resultDiv.classList.add('show');
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
 <script src="./index_files/sandbox_inspect.js.download"></script><script defer="" src="./index_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9d443c77cfbe43dc&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;4edd5f8ec12a48cfa682ab8261b80a79&quot;}" crossorigin="anonymous"></script>
 
 </body></html>
