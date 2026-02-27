@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<!-- saved from url=(0157)https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Performance Standards Compliance | Save Energy Systems</title>
+    <meta name="description" content="Navigate building performance standards compliance across major U.S. cities. Reduce emissions penalties through HVAC optimization without capital replacement. Calculate your exposure to Local Law 97, BERDO, BEPS, and other BPS programs.">
+    <link href="./index_files/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./index_files/bootstrap-icons.css">
+    
+    <!-- Schema.org Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Save Energy Systems",
+      "url": "https://www.saveenergysystems.com",
+      "logo": "https://www.saveenergysystems.com/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-617-564-4800",
+        "email": "sales@saveenergysystems.com",
+        "contactType": "Sales"
+      },
+      "description": "AI-driven energy and facility management systems.",
+      "foundingDate": "2012"
+    }
+    </script>
+    
+    <!-- Schema.org FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Local Law 97 a federal law?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Local Law 97 is a New York City ordinance. Similar building performance standards exist in Boston, Washington DC, Seattle, Denver, Chicago, and Los Angeles. Each jurisdiction sets its own emissions caps, penalty rates, and compliance timelines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to replace my HVAC system to comply?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not necessarily. Many buildings achieve 20–30% HVAC energy reductions through runtime optimization and predictive maintenance before considering capital replacement. Retrofit-first strategies preserve existing infrastructure while reducing emissions and penalty exposure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are penalties calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Penalties vary by jurisdiction. NYC Local Law 97 imposes $268 per ton of CO₂e over the cap. Other cities use different formulas. Penalties recur annually and reduce net operating income, impacting property valuation and refinancing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What data do I need for a verified assessment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Building square footage, current energy consumption (kWh, therms), occupancy type, existing HVAC equipment inventory, and jurisdiction. Utility bills and energy benchmarking reports accelerate the assessment process."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How quickly can the system be deployed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wireless sensor deployment typically occurs in hours with minimal tenant disruption. Integration with existing building automation systems and commissioning follow within days. Most portfolios see initial savings within 90 days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What savings should I expect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typical HVAC energy reductions range from 20–30%, though results vary by building age, equipment condition, occupancy patterns, and climate. Portfolio-wide implementations often achieve consistency across properties."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --ses-primary: #0B3A53;
+            --ses-secondary: #0F6B6B;
+            --ses-accent: #1FA6A6;
+            --ses-dark: #0F1720;
+            --ses-light: #F5F7FA;
+            --ses-border: #DEE2E6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--ses-dark);
+            font-size: 1.05rem;
+            line-height: 1.75;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .lead {
+            font-size: 1.25rem;
+            line-height: 1.6;
+        }
+        .disclaimer, small {
+            font-size: 0.92rem;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            .lead {
+                font-size: 1.1rem;
+            }
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--ses-primary) !important;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, var(--ses-primary) 0%, var(--ses-secondary) 100%);
+            color: white;
+            padding: 5rem 0 4rem;
+        }
+        .hero-section .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            opacity: 0.95;
+            line-height: 1.2;
+        }
+        .hero-section .supporting-tagline {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+        .hero-section .primary-tagline {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .hero-section .subhead {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 56px;
+            background: white;
+            border-bottom: 2px solid var(--ses-border);
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .sticky-nav .nav-link {
+            color: var(--ses-dark);
+            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
+            white-space: nowrap;
+        }
+        .sticky-nav .nav-link:hover {
+            color: var(--ses-primary);
+            background: var(--ses-light);
+        }
+        .sticky-nav .nav-link.active {
+            color: var(--ses-accent);
+            font-weight: 600;
+        }
+        .financial-strip {
+            background: var(--ses-light);
+            border-left: 4px solid var(--ses-accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .financial-strip .metric {
+            margin-bottom: 1rem;
+        }
+        .financial-strip .metric:last-child {
+            margin-bottom: 0;
+        }
+        .financial-strip .metric-label {
+            font-weight: 600;
+            color: var(--ses-primary);
+            font-size: 0.9rem;
+        }
+        .financial-strip .metric-value {
+            font-size: 1.1rem;
+            color: var(--ses-dark);
+        }
+        .section-title {
+            color: var(--ses-primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 4px solid var(--ses-accent);
+            display: inline-block;
+            font-size: 2rem;
+        }
+        .callout-box {
+            background: #E6F7F7;
+            border-left: 4px solid var(--ses-accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .callout-box-primary {
+            background: #E8F4F8;
+            border-left: 4px solid var(--ses-secondary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .calculator-section {
+            background: var(--ses-light);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--ses-border);
+        }
+        .calculator-result {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border: 2px solid var(--ses-accent);
+            display: none;
+        }
+        .calculator-result.show {
+            display: block;
+        }
+        .btn-primary {
+            background-color: var(--ses-accent);
+            border-color: var(--ses-accent);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+        }
+        .btn-primary:hover {
+            background-color: var(--ses-secondary);
+            border-color: var(--ses-secondary);
+        }
+        .btn-outline-primary {
+            border-color: var(--ses-accent);
+            color: var(--ses-accent);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--ses-accent);
+            border-color: var(--ses-accent);
+            color: white;
+        }
+        .btn-outline-light:hover {
+            background-color: rgba(255,255,255,0.2);
+            border-color: white;
+        }
+        .jurisdiction-card {
+            border: 1px solid var(--ses-border);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .jurisdiction-card:hover {
+            border-color: var(--ses-accent);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        .jurisdiction-card h4 {
+            color: var(--ses-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .resource-card {
+            border: 1px solid var(--ses-border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: white;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .resource-card:hover {
+            border-color: var(--ses-accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .resource-card .card-icon {
+            font-size: 2rem;
+            color: var(--ses-accent);
+            margin-bottom: 1rem;
+        }
+        .resource-card h4 {
+            color: var(--ses-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .case-study {
+            background: white;
+            border: 2px solid var(--ses-accent);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .case-study .case-label {
+            font-weight: 600;
+            color: var(--ses-primary);
+            margin-bottom: 0.5rem;
+        }
+        .case-study .case-value {
+            margin-bottom: 1rem;
+        }
+        .accordion-button {
+            color: var(--ses-primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .accordion-button:not(.collapsed) {
+            background: var(--ses-light);
+            color: var(--ses-accent);
+        }
+        footer {
+            background: var(--ses-dark);
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+        footer .supporting-tagline {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+        footer .primary-tagline {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .disclaimer {
+            font-size: 0.92rem;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        .nav-pills .nav-link {
+            color: var(--ses-primary);
+            border: 2px solid var(--ses-border);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+        }
+        .nav-pills .nav-link.active {
+            background-color: var(--ses-accent);
+            border-color: var(--ses-accent);
+            color: white;
+        }
+        .nav-pills .nav-link:hover:not(.active) {
+            background-color: var(--ses-light);
+            border-color: var(--ses-accent);
+        }
+        .persona-toggle-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--ses-primary);
+            font-weight: 500;
+        }
+        @media (max-width: 768px) {
+            .hero-section .page-title {
+                font-size: 1.8rem;
+            }
+            .hero-section .primary-tagline {
+                font-size: 2.2rem;
+            }
+            .hero-section .subhead {
+                font-size: 1.2rem;
+            }
+            .sticky-nav {
+                overflow-x: auto;
+            }
+            .sticky-nav .nav {
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+<script src="./index_files/diffDOM.js.download"></script></head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#">Save Energy Systems</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#overview">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#calculator">Penalty Estimator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#solutions">Solutions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary btn-sm ms-2" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#calculator">Get Assessment</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sticky-nav d-none d-lg-block">
+        <div class="container">
+            <nav class="nav">
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#overview">Overview</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#ll97-federal">Is LL97 Federal?</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#fine-vs-fix">Fine vs. Fix</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#optimization">Optimization First</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#retrofit-authority">Retrofit Authority</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#solutions">Solutions</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#calculator">Penalty Calculator</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#jurisdictions">U.S. Cities</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#case">Case Example</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#executives">For Executives</a>
+                <a class="nav-link" href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#faq">FAQs</a>
+            </nav>
+        </div>
+    </div>
+
+    <header class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center">
+                    <div class="supporting-tagline">AI-driven energy and facility management systems.</div>
+                    <h1 class="page-title">Building Performance Standards Compliance</h1>
+                    <div class="primary-tagline">Be smart. Take control.</div>
+                    <p class="subhead">Is it cheaper to pay the fine — or fix the problem?</p>
+                    <p class="lead mb-4">
+                        Building performance standards now regulate emissions in nine major U.S. cities. Penalties recur annually and compound valuation risk. Retrofit-first HVAC optimization integrates with existing BMS and reduces exposure without capital replacement.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#calculator" class="btn btn-primary btn-lg">Get Your Portfolio Risk Assessment</a>
+                        <a href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#calculator" class="btn btn-outline-light btn-lg">Estimate Your Exposure</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="overview" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Building Performance Standards Are Expanding Nationwide</h2>
+                        <p class="lead">
+                            NYC Local Law 97, Boston BERDO, Washington DC BEPS, Seattle, Denver, Chicago, and Los Angeles have enacted mandatory emissions caps. Buildings exceeding limits face annual penalties that reduce net operating income and impair asset value.
+                        </p>
+                        <p>
+                            Each jurisdiction sets distinct caps, penalty rates, and compliance timelines. Owners of multi-property portfolios must track regulations across cities and address penalty exposure before it compounds.
+                        </p>
+
+                        <div class="financial-strip">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="metric">
+                                        <div class="metric-label">Upfront Cost</div>
+                                        <div class="metric-value">$0 (OpEx-forward)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="metric">
+                                        <div class="metric-label">Typical HVAC Reduction</div>
+                                        <div class="metric-value">20–30%</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="metric">
+                                        <div class="metric-label">Install Time</div>
+                                        <div class="metric-value">Hours</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="metric">
+                                        <div class="metric-label">Founded</div>
+                                        <div class="metric-value">2012</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ll97-federal" class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Is Local Law 97 a Federal Law?</h2>
+                        <p><strong>No.</strong> Local Law 97 is a New York City ordinance requiring large buildings to meet emissions caps by 2024 and stricter limits by 2030. Buildings exceeding caps pay <strong>$268 per ton of CO₂e</strong> annually.</p>
+                        
+                        <p>
+                            Similar performance standards exist in Boston, Washington DC, Seattle, Denver, Chicago, and Los Angeles. Each jurisdiction independently sets caps, penalties, and timelines. Multi-city portfolios require jurisdiction-specific compliance strategies.
+                        </p>
+                        
+                        <div class="callout-box">
+                            <strong>Key Point</strong>
+                            <p class="mb-0">Building performance standards are municipal regulations, not federal mandates. Penalties vary by city but share a common structure: annual recurring charges that reduce NOI and asset value.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fine-vs-fix" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Is It Cheaper to Pay the Fine?</h2>
+                        <p><strong>No.</strong> Penalties recur annually and reduce net operating income. Capitalization rates convert NOI loss directly into asset devaluation.</p>
+                        
+                        <div class="callout-box">
+                            <h4><i class="bi bi-calculator"></i> Valuation Impact Example</h4>
+                            <p>
+                                Consider a property facing $250,000 in annual penalties. Assuming a 6% capitalization rate, this recurring expense implies approximately <strong>$4.16 million in reduced asset value</strong> ($250,000 ÷ 0.06).
+                            </p>
+                            <p class="disclaimer mb-0">
+                                Illustrative example only. Actual valuation impact depends on cap rate, market conditions, financing terms, and buyer underwriting assumptions. Not financial or investment advice.
+                            </p>
+                        </div>
+
+                        <p class="mt-4">
+                            Optimization strategies that reduce emissions before penalties accrue preserve NOI and protect refinancing capacity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="optimization" class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Optimization Before Replacement</h2>
+                        <p>
+                            HVAC systems typically drive 40–60% of commercial building energy consumption. Most buildings operate equipment on fixed schedules that ignore real-time occupancy, weather, and load conditions.
+                        </p>
+                        <p>
+                            Adaptive runtime control reduces energy waste without replacing functional equipment. Wireless sensors, machine learning algorithms, and existing building automation systems work together to optimize operations.
+                        </p>
+                        
+                        <div class="callout-box-primary">
+                            <h4><i class="bi bi-lightbulb"></i> Why Optimize First?</h4>
+                            <ul class="mb-0">
+                                <li><strong>Speed:</strong> Retrofit deployments complete in hours to days, not months.</li>
+                                <li><strong>Cost:</strong> OpEx-forward options available; no upfront capex required.</li>
+                                <li><strong>Disruption:</strong> Wireless systems integrate with existing infrastructure; no tenant downtime.</li>
+                                <li><strong>Vendors:</strong> Keep your incumbent service contractors; no forced transitions.</li>
+                                <li><strong>Compliance:</strong> Immediate energy reduction supports near-term deadlines while planning long-term capex.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="retrofit-authority" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Why SES Is the Retrofit Authority</h2>
+                        <p>
+                            Save Energy Systems has delivered retrofit-first optimization across commercial portfolios since 2012. The platform integrates with existing building automation systems without replacing functional infrastructure.
+                        </p>
+                        
+                        <div class="callout-box">
+                            <h4><i class="bi bi-gear-fill"></i> The SES Retrofit Advantage</h4>
+                            <ul class="mb-2">
+                                <li><strong>Retrofit, not rip-and-replace:</strong> Preserves capital while reducing emissions and energy costs.</li>
+                                <li><strong>BMS-agnostic integration:</strong> Works with Tridium, Johnson Controls, Siemens, Honeywell, and other control platforms.</li>
+                                <li><strong>Wireless plug-and-play deployment:</strong> Hours to install, minimal tenant disruption.</li>
+                                <li><strong>Compatible with existing control layers:</strong> Optimization algorithms layer over current systems.</li>
+                                <li><strong>Ideal for older buildings and multi-site portfolios:</strong> Addresses compliance without synchronized capital plans.</li>
+                            </ul>
+                            <p class="mb-0"><strong>Optimization is the first capital strategy.</strong> Defer or eliminate equipment replacement by extracting maximum performance from existing assets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Retrofit-First Emissions &amp; Compliance Mitigation</h2>
+                        <p>
+                            SES platforms deploy wireless sensors, predictive algorithms, and BAS integration to optimize HVAC runtime and reduce emissions exposure. The approach preserves existing equipment, service vendors, and operational workflows.
+                        </p>
+
+                        <div class="callout-box-primary mt-4">
+                            <h4><i class="bi bi-check-circle-fill"></i> What SES Changes Without Replacing Equipment</h4>
+                            <ul class="mb-0">
+                                <li>Runtime scheduling based on real-time occupancy and weather.</li>
+                                <li>Supply air temperature optimization to reduce heating and cooling waste.</li>
+                                <li>Predictive maintenance alerts before failures disrupt operations.</li>
+                                <li>Zonal demand response to eliminate simultaneous heating and cooling.</li>
+                                <li>Portfolio-wide energy visibility and anomaly detection.</li>
+                                <li>Automated compliance reporting aligned with benchmarking requirements.</li>
+                            </ul>
+                        </div>
+
+                        <div class="callout-box mt-4">
+                            <strong>SmartPM™</strong> — Real-time analytics platform providing portfolio energy visibility, predictive maintenance, and compliance tracking. Results: 20–30% HVAC energy reduction, minimal disruption, vendor-agnostic deployment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="calculator" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Penalty Exposure Estimator</h2>
+                        <p class="lead">
+                            Building performance standards impose recurring annual penalties for emissions exceeding regulatory caps. This calculator provides directional estimates based on jurisdiction, building size, and penalty rates.
+                        </p>
+
+                        <div class="calculator-section">
+                            <form id="calculatorForm">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="jurisdiction" class="form-label fw-bold">Jurisdiction</label>
+                                        <select class="form-select" id="jurisdiction" required="">
+                                            <option value="">Select jurisdiction...</option>
+                                            <option value="nyc">NYC Local Law 97</option>
+                                            <option value="boston">Boston BERDO</option>
+                                            <option value="dc">Washington DC BEPS</option>
+                                            <option value="seattle">Seattle Building Emissions Performance Standard</option>
+                                            <option value="denver">Denver Energize Denver</option>
+                                            <option value="chicago">Chicago Building Performance Standard</option>
+                                            <option value="la">Los Angeles EBEWE Ordinance</option>
+                                            <option value="other">Other / Not Sure</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="sqft" class="form-label fw-bold">Building Square Footage</label>
+                                        <input type="number" class="form-control" id="sqft" placeholder="e.g., 100000" required="">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="penaltyRate" class="form-label fw-bold">Estimated Annual Penalty Rate or Overage (Optional)</label>
+                                        <input type="number" class="form-control" id="penaltyRate" placeholder="e.g., 50000">
+                                        <small class="form-text text-muted">Enter if known; otherwise leave blank</small>
+                                    </div>
+                                </div>
+                                <p class="text-muted mb-3"><small><i class="bi bi-info-circle"></i> This tool provides directional estimates. For accuracy, request a verified assessment.</small></p>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-calculator"></i> Calculate Estimate
+                                </button>
+                            </form>
+
+                            <div id="calculatorResult" class="calculator-result">
+                                <h4 class="text-center mb-3"><i class="bi bi-exclamation-triangle-fill text-warning"></i> Estimated Penalty Exposure</h4>
+                                <div id="resultContent"></div>
+                                <div class="alert alert-warning mt-3" role="alert">
+                                    <strong>Important:</strong> These are directional estimates only. Building performance standard rules vary significantly by jurisdiction, building type, and baseline emissions. For an accurate penalty assessment, Save Energy Systems reviews your benchmarking reports, utility data, and building profile to model compliance gaps and identify optimization pathways.
+                                </div>
+                                <div class="text-center mt-4">
+                                    <a href="https://www.genspark.ai/api/code_sandbox_light/preview/54c1688d-4e7a-4f5a-95a9-7e051db62d10/index.html?canvas_history_id=b2fe7cc0-907f-4cb7-8761-1f75b9f47f51#contact" class="btn btn-primary btn-lg">Request a Verified Assessment</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="jurisdictions" class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Compliance Across Major U.S. Cities</h2>
+                        <p class="lead">
+                            Building performance standards operate independently across jurisdictions. Each city sets emissions caps, penalty structures, and compliance timelines. Multi-property portfolios require tailored strategies for each market.
+                        </p>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="jurisdiction-card">
+                                    <h4><i class="bi bi-building"></i> NYC Local Law 97 (NYC-only)</h4>
+                                    <p>
+                                        Applies to NYC buildings over 25,000 sq ft. Emissions caps began in 2024; caps tighten in 2030 and 2035. Penalties: $268/ton CO₂e over limit, assessed annually.
+                                    </p>
+                                    <a href="https://www.nyc.gov/site/sustainablebuildings/ll97/local-law-97.page" target="_blank" class="btn btn-sm btn-outline-primary">Official Resource</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="jurisdiction-card">
+                                    <h4><i class="bi bi-building"></i> Boston BERDO</h4>
+                                    <p>
+                                        Building Emissions Reduction and Disclosure Ordinance. Applies to buildings over 20,000 sq ft. Compliance requirements phase in by building size and type.
+                                    </p>
+                                    <a href="https://www.boston.gov/environment-and-energy/building-emissions-reduction-and-disclosure" target="_blank" class="btn btn-sm btn-outline-primary">Official Resource</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="jurisdiction-card">
+                                    <h4><i class="bi bi-building"></i> Washington DC BEPS</h4>
+                                    <p>
+                                        Building Energy Performance Standards. Applies to buildings over 50,000 sq ft (private) and 10,000 sq ft (public). Performance tiers and compliance cycles vary by use type.
+                                    </p>
+                                    <a href="https://doee.dc.gov/beps" target="_blank" class="btn btn-sm btn-outline-primary">Official Resource</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="jurisdiction-card">
+                                    <h4><i class="bi bi-building"></i> Seattle Building Emissions Performance Standard</h4>
+                                    <p>
+                                        Mandatory emissions reporting and performance targets for commercial and multifamily buildings. Compliance pathways include direct reduction or alternative compliance payments.
+                                    </p>
+                                    <a href="https://www.seattle.gov/office-of-sustainability-and-environment/climate-change/buildings-and-energy" target="_blank" class="btn btn-sm btn-outline-primary">Official Resource</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="jurisdiction-card">
+                                    <h4><i class="bi bi-building"></i> Denver Energize Denver</h4>
+                                    <p>
+                                        Performance requirements for buildings over 25,000 sq ft. Benchmarking, audits, and tuning requirements with phased compliance timelines.
+                                    </p>
+                                    <a href="https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-Resiliency/High-Performance-Buildings-and-Homes/Energize-Denver" target="_blank" class="btn btn-sm btn-outline-primary">Official Resource</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="jurisdiction-card">
+                                    <h4><i class="bi bi-building"></i> Chicago Building Performance Standard</h4>
+                                    <p>
+                                        Requires covered buildings to meet energy performance targets or face penalties. Benchmarking and compliance reporting required annually.
+                                    </p>
+                                    <a href="https://www.chicago.gov/city/en/sites/climate-action-plan/home.html" target="_blank" class="btn btn-sm btn-outline-primary">Official Resource</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="jurisdiction-card">
+                                    <h4><i class="bi bi-building"></i> Los Angeles EBEWE Ordinance</h4>
+                                    <p>
+                                        Existing Buildings Energy and Water Efficiency Ordinance. Benchmarking, audit, and retrocommissioning requirements for buildings over 20,000 sq ft.
+                                    </p>
+                                    <a href="https://www.ladbs.org/services/core-services/plan-check-permit/plan-check-permit-special-assistance/energy-efficiency-benchmarking-compliance" target="_blank" class="btn btn-sm btn-outline-primary">Official Resource</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="callout-box mt-4">
+                            <p class="mb-0">
+                                <strong>Note:</strong> Compliance deadlines, penalty structures, and reporting requirements vary by jurisdiction and building type. Save Energy Systems maintains current regulatory intelligence and supports compliance across all active programs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Find Your Local Requirements</h2>
+                        <p class="lead">
+                            Building performance standards evolve as jurisdictions update caps, add covered building types, and adjust penalty schedules. Use these resources to track regulatory changes and compliance deadlines.
+                        </p>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-4">
+                                <div class="resource-card">
+                                    <div class="card-icon"><i class="bi bi-map"></i></div>
+                                    <h4>IMT Building Performance Standards Map</h4>
+                                    <p>Interactive map showing BPS programs across North America with details on coverage, deadlines, and requirements.</p>
+                                    <a href="https://www.imt.org/resources/building-performance-standards/" target="_blank" class="btn btn-sm btn-outline-primary">View Map</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="resource-card">
+                                    <div class="card-icon"><i class="bi bi-file-earmark-text"></i></div>
+                                    <h4>U.S. DOE EnergyCodes.gov</h4>
+                                    <p>Federal resource for building energy codes, standards, and performance compliance guidance by state and locality.</p>
+                                    <a href="https://www.energycodes.gov/" target="_blank" class="btn btn-sm btn-outline-primary">Explore DOE Resources</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="resource-card">
+                                    <div class="card-icon"><i class="bi bi-star"></i></div>
+                                    <h4>ENERGY STAR Portfolio Manager</h4>
+                                    <p>EPA's benchmarking tool for tracking and measuring building energy use — required for most BPS compliance reporting.</p>
+                                    <a href="https://www.energystar.gov/buildings/benchmark" target="_blank" class="btn btn-sm btn-outline-primary">Benchmarking Basics</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="resource-card">
+                                    <div class="card-icon"><i class="bi bi-newspaper"></i></div>
+                                    <h4>Facilities Dive BPS Tracker</h4>
+                                    <p>Industry news and tracking map covering building performance standard legislation, deadlines, and implementation updates.</p>
+                                    <a href="https://www.facilitiesdive.com/" target="_blank" class="btn btn-sm btn-outline-primary">View Tracker</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="callout-box mt-4">
+                            <p class="mb-0">
+                                <i class="bi bi-info-circle"></i> <strong>Not sure which program applies?</strong> Request a verified assessment and we'll confirm jurisdiction, deadlines, and exposure.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="case" class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Case Example</h2>
+                        <p><strong>Property:</strong> 180,000 sq ft multi-tenant commercial building, mixed-use occupancy, legacy HVAC controls.</p>
+
+                        <div class="case-study">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="case-label">Deployment</div>
+                                    <div class="case-value">
+                                        <ul class="mb-0">
+                                            <li>Wireless sensor network installed in 8 hours.</li>
+                                            <li>No tenant disruption or equipment downtime.</li>
+                                            <li>Existing service vendor retained.</li>
+                                            <li>Integration with legacy building automation system.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="case-label">Outcomes (First 90 Days)</div>
+                                    <div class="case-value">
+                                        <ul class="mb-0">
+                                            <li><strong>31% HVAC energy reduction</strong> compared to baseline.</li>
+                                            <li>Avoided estimated $85,000 first-year penalty exposure.</li>
+                                            <li>Real-time anomaly detection prevented two equipment failures.</li>
+                                            <li>Portfolio reporting integrated with owner's compliance tracking.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="disclaimer mt-3 mb-0">
+                                Results vary by building age, equipment condition, occupancy patterns, and baseline performance. This example illustrates typical outcomes; individual properties may experience different results.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="executives" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title mb-4">Executive Perspectives</h2>
+                        <div class="persona-toggle-intro">
+                            Choose the lens you care about most.
+                        </div>
+                        
+                        <ul class="nav nav-pills justify-content-center mb-4" id="personaTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="cfo-tab" data-bs-toggle="pill" data-bs-target="#cfo-content" type="button" role="tab" aria-controls="cfo-content" aria-selected="true">
+                                    <i class="bi bi-cash-stack"></i> For CFOs &amp; Owners
+                                </button>
+                            </li>
+                            <li class="nav-item ms-2" role="presentation">
+                                <button class="nav-link" id="facility-tab" data-bs-toggle="pill" data-bs-target="#facility-content" type="button" role="tab" aria-controls="facility-content" aria-selected="false" tabindex="-1">
+                                    <i class="bi bi-tools"></i> For Facility Directors
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="personaTabContent">
+                            <div class="tab-pane fade show active" id="cfo-content" role="tabpanel" aria-labelledby="cfo-tab">
+                                <h3 class="mb-3" style="color: var(--ses-primary);">Financial &amp; Portfolio Management</h3>
+                                <p>
+                                    Building performance standards create recurring NOI liabilities that impair asset value and constrain refinancing. Optimization reduces penalty exposure without capital deployment.
+                                </p>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-6 mb-4">
+                                        <h4><i class="bi bi-cash-stack"></i> Protect Asset Value</h4>
+                                        <p>
+                                            Annual penalties reduce NOI and flow through to valuation at cap rate multiples. $250k penalty at 6% cap = ~$4.16M valuation impact. Lenders discount properties with unresolved compliance exposure.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <h4><i class="bi bi-bank"></i> Preserve Refinancing Capacity</h4>
+                                        <p>
+                                            Optimization preserves NOI without capital calls. OpEx-forward structures avoid upfront expenditure. Compliance documentation supports refinancing applications.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <h4><i class="bi bi-graph-up-arrow"></i> Portfolio Scalability</h4>
+                                        <p>
+                                            Wireless deployment scales across properties without synchronized capital plans. Portfolio-wide visibility identifies highest-risk assets first. Multi-jurisdiction compliance managed through single platform.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="callout-box-primary">
+                                            <strong>Bottom Line</strong>
+                                            <p class="mb-0">Penalties recur annually and compound valuation damage. Optimization reduces exposure and preserves refinancing capacity without capital replacement.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="facility-content" role="tabpanel" aria-labelledby="facility-tab">
+                                <h3 class="mb-3" style="color: var(--ses-primary);">Operations &amp; Maintenance</h3>
+                                <p>
+                                    Facility directors balance compliance, tenant comfort, and equipment reliability. SES platforms integrate with existing systems and service contracts without operational disruption.
+                                </p>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-6 mb-4">
+                                        <h4><i class="bi bi-shield-check"></i> No Disruption</h4>
+                                        <p>
+                                            Wireless sensors deploy in hours with no tenant interruption. No construction permits, no equipment downtime. Optimization layers over existing control systems.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <h4><i class="bi bi-people"></i> Keep Your Service Vendors</h4>
+                                        <p>
+                                            Existing maintenance contracts remain in place. Service vendors retain equipment responsibility. Platform provides visibility; vendors execute repairs.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <h4><i class="bi bi-wrench"></i> Predictive Maintenance</h4>
+                                        <p>
+                                            Real-time anomaly detection prevents equipment failures. Alerts prioritize maintenance before breakdowns occur. Extends equipment life by reducing stress cycles.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="callout-box-primary">
+                                            <strong>Bottom Line</strong>
+                                            <p class="mb-0">Optimization delivers energy savings and compliance without disrupting operations, replacing vendors, or requiring capital approvals. Portfolio visibility centralizes reporting.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h2 class="section-title">Frequently Asked Questions</h2>
+
+                        <div class="accordion" id="faqAccordion">
+                            <!-- FAQ 1 -->
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        Is Local Law 97 a federal law?
+                                    </button>
+                                </h3>
+                                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        No. Local Law 97 is a New York City ordinance. Similar building performance standards exist in Boston, Washington DC, Seattle, Denver, Chicago, and Los Angeles. Each jurisdiction sets its own emissions caps, penalty rates, and compliance timelines.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- FAQ 2 -->
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        Do I need to replace my HVAC system to comply?
+                                    </button>
+                                </h3>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Not necessarily. Many buildings achieve 20–30% HVAC energy reductions through runtime optimization and predictive maintenance before considering capital replacement. Retrofit-first strategies preserve existing infrastructure while reducing emissions and penalty exposure.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- FAQ 3 -->
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        How are penalties calculated?
+                                    </button>
+                                </h3>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Penalties vary by jurisdiction. NYC Local Law 97 imposes $268 per ton of CO₂e over the cap. Other cities use different formulas. Penalties recur annually and reduce net operating income, impacting property valuation and refinancing.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- FAQ 4 -->
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                        What data do I need for a verified assessment?
+                                    </button>
+                                </h3>
+                                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Building square footage, current energy consumption (kWh, therms), occupancy type, existing HVAC equipment inventory, and jurisdiction. Utility bills and energy benchmarking reports accelerate the assessment process.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- FAQ 5 -->
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                        How quickly can the system be deployed?
+                                    </button>
+                                </h3>
+                                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Wireless sensor deployment typically occurs in hours with minimal tenant disruption. Integration with existing building automation systems and commissioning follow within days. Most portfolios see initial savings within 90 days.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- FAQ 6 -->
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                        What savings should I expect?
+                                    </button>
+                                </h3>
+                                <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Typical HVAC energy reductions range from 20–30%, though results vary by building age, equipment condition, occupancy patterns, and climate. Portfolio-wide implementations often achieve consistency across properties.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2 class="section-title d-inline-block">Get Your Portfolio Risk Assessment</h2>
+                        <p class="lead mt-3">
+                            Contact us at <strong>(617) 564-4800</strong> or <a href="mailto:sales@saveenergysystems.com">sales@saveenergysystems.com</a>.
+                        </p>
+                        
+                        <div class="callout-box-primary text-start">
+                            <h4 class="text-center mb-4">What We Deliver:</h4>
+                            <ul>
+                                <li><strong>Penalty exposure analysis</strong> across your portfolio and jurisdictions.</li>
+                                <li><strong>Energy baseline assessment</strong> identifying optimization opportunities.</li>
+                                <li><strong>Verified savings projections</strong> with equipment-specific recommendations.</li>
+                                <li><strong>Compliance roadmap</strong> with deployment timelines and cost structures.</li>
+                                <li><strong>OpEx-forward financing options</strong> for zero upfront capital.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                            <a href="tel:+16175644800" class="btn btn-primary btn-lg">
+                                <i class="bi bi-telephone-fill"></i> Call (617) 564-4800
+                            </a>
+                            <a href="mailto:sales@saveenergysystems.com" class="btn btn-outline-primary btn-lg">
+                                <i class="bi bi-envelope-fill"></i> Email Sales Team
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <div class="supporting-tagline">AI-driven energy and facility management systems.</div>
+                    <div class="primary-tagline">Be smart. Take control.</div>
+                    <p class="mb-3">
+                        Contact us at <strong>(617) 564-4800</strong> or <a href="mailto:sales@saveenergysystems.com" class="text-white">sales@saveenergysystems.com</a>.
+                    </p>
+                    <p class="small" style="opacity: 0.7;">
+                        © 2026 Save Energy Systems. Building performance optimization since 2012.<br>
+                        Penalty estimates and savings projections are illustrative. Actual results vary by property, jurisdiction, equipment condition, and baseline performance. Valuation impact calculations assume standard cap rate conventions; consult financial advisors for property-specific analysis.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./index_files/bootstrap.bundle.min.js.download"></script>
+    <script>
+        // Penalty Calculator Logic
+        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const jurisdiction = document.getElementById('jurisdiction').value;
+            const sqft = parseInt(document.getElementById('sqft').value);
+            const penaltyRate = document.getElementById('penaltyRate').value;
+            
+            const resultDiv = document.getElementById('calculatorResult');
+            const contentDiv = document.getElementById('resultContent');
+            
+            let resultHTML = '';
+            
+            if (jurisdiction === 'nyc') {
+                resultHTML = `
+                    <div class="alert alert-info">
+                        <h5><strong>NYC Local Law 97 Estimation</strong></h5>
+                        <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
+                        <p>NYC LL97 penalties are calculated at <strong>$268 per ton of CO₂ equivalent</strong> over your building's emissions cap. To provide an accurate estimate, we need:</p>
+                        <ul>
+                            <li>Your building's specific emissions cap (based on occupancy type and year)</li>
+                            <li>Actual or projected emissions (from benchmarking data)</li>
+                            <li>Tons of CO₂e overage</li>
+                        </ul>
+                        <p class="mb-0"><strong>Sample Illustrative Range:</strong> For a building of this size, annual penalties could range from <strong>$50,000 to $500,000+</strong> depending on overage magnitude. Buildings with efficient systems may face zero penalties; buildings with legacy HVAC and high energy use may face exposure at the higher end or beyond.</p>
+                    </div>
+                `;
+                
+                if (penaltyRate) {
+                    const customPenalty = parseFloat(penaltyRate);
+                    const fiveYearImpact = customPenalty * 5;
+                    const valuationImpact = (customPenalty / 0.06).toFixed(0);
+                    
+                    resultHTML += `
+                        <div class="alert alert-warning mt-3">
+                            <h5><strong>Your Estimated Exposure</strong></h5>
+                            <p><strong>Annual Penalty (your estimate):</strong> $${customPenalty.toLocaleString()}</p>
+                            <p><strong>5-Year Cumulative Exposure (2024–2028):</strong> $${fiveYearImpact.toLocaleString()}</p>
+                            <p><strong>Implied Valuation Impact (6% cap rate):</strong> ~$${parseInt(valuationImpact).toLocaleString()}</p>
+                            <p class="disclaimer mb-0">Illustrative only. Assumes recurring penalty with no mitigation. Does not account for 2030 cap tightening or potential escalation.</p>
+                        </div>
+                    `;
+                }
+            } else if (jurisdiction === 'other') {
+                resultHTML = `
+                    <div class="alert alert-secondary">
+                        <h5><strong>Jurisdiction Not Specified</strong></h5>
+                        <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
+                        <p>Building performance standards vary significantly by jurisdiction. To provide an accurate penalty estimate, we need to identify which program applies to your asset and review your benchmarking data.</p>
+                        <p class="mb-0">Save Energy Systems maintains regulatory intelligence across all active U.S. programs and can model your exposure once jurisdiction is confirmed.</p>
+                    </div>
+                `;
+            } else {
+                const jurisdictionNames = {
+                    'boston': 'Boston BERDO',
+                    'dc': 'Washington DC BEPS',
+                    'seattle': 'Seattle Building Emissions Performance Standard',
+                    'denver': 'Denver Energize Denver',
+                    'chicago': 'Chicago Building Performance Standard',
+                    'la': 'Los Angeles EBEWE Ordinance'
+                };
+                
+                resultHTML = `
+                    <div class="alert alert-info">
+                        <h5><strong>${jurisdictionNames[jurisdiction]} Estimation</strong></h5>
+                        <p><strong>Building Size:</strong> ${sqft.toLocaleString()} sq ft</p>
+                        <p>Penalty structures and compliance pathways vary by jurisdiction. ${jurisdictionNames[jurisdiction]} has specific requirements based on building type, size, and use.</p>
+                        <p><strong>Typical Exposure Range (directional):</strong> Buildings of this size in covered jurisdictions may face annual penalties ranging from <strong>$25,000 to $300,000+</strong> depending on emissions gap, compliance pathway options, and jurisdiction-specific multipliers.</p>
+                        <p class="mb-0">For a verified assessment, Save Energy Systems models your specific building against jurisdiction rules using benchmarking and utility data.</p>
+                    </div>
+                `;
+                
+                if (penaltyRate) {
+                    const customPenalty = parseFloat(penaltyRate);
+                    const fiveYearImpact = customPenalty * 5;
+                    const valuationImpact = (customPenalty / 0.06).toFixed(0);
+                    
+                    resultHTML += `
+                        <div class="alert alert-warning mt-3">
+                            <h5><strong>Your Estimated Exposure</strong></h5>
+                            <p><strong>Annual Penalty (your estimate):</strong> $${customPenalty.toLocaleString()}</p>
+                            <p><strong>5-Year Cumulative Exposure:</strong> $${fiveYearImpact.toLocaleString()}</p>
+                            <p><strong>Implied Valuation Impact (6% cap rate):</strong> ~$${parseInt(valuationImpact).toLocaleString()}</p>
+                            <p class="disclaimer mb-0">Illustrative only. Assumes recurring penalty with no mitigation. Jurisdiction rules and timelines vary.</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            contentDiv.innerHTML = resultHTML;
+            resultDiv.classList.add('show');
+            
+            // Smooth scroll to result
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = 120; // Account for fixed navs
+                    const targetPosition = target.offsetTop - navHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section in sticky nav
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sticky-nav .nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+<script src="./index_files/sandbox_inspect.js.download"></script><script defer="" src="./index_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9d443c77cfbe43dc&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;4edd5f8ec12a48cfa682ab8261b80a79&quot;}" crossorigin="anonymous"></script>
+
+</body></html>
